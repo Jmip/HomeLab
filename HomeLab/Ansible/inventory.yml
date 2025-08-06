@@ -1,0 +1,16 @@
+---
+all:
+  children:
+    MasterServer:
+      hosts:
+        13.60.239.37:
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: /Users/mihaipetrache/Documents/AWS/Tutorial.pem
+    Students:
+      hosts:
+        13.51.241.241:
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: /Users/mihaipetrache/Documents/AWS/Tutorial.pem
+        51.21.222.123:
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: /Users/mihaipetrache/Documents/AWS/Tutorial.pem

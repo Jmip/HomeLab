@@ -1,0 +1,49 @@
+- name: Ensure ansible user exists on servers
+  hosts: 
+    - MasterServer
+    - Students
+  become: true
+  vars:
+    check_username: ansible
+    check_group: ansible
+    check_groups: sudo
+    ansible_ssh_key: "{{ lookup('file', '/Users/mihaipetrache/Documents/Terraform/Ansible/publicKey.pub') }}" # <-- Add this!
+
+  tasks:
+    - name: Check if ansible user exists
+      ansible.builtin.command: "id {{ check_username }}"
+      register: user_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: Check if ansible group exists or create it
+      ansible.builtin.group:
+        name: "{{ check_group }}"
+        state: present 
+      when: check_group is defined and user_check.rc != 0
+
+    - name: Create ansible user if it doesn't exists
+      ansible.builtin.user:
+        name: "{{ check_username }}"  
+        group: "{{ check_group | default(omit) }}"
+        groups: "{{ check_groups | default('') }}"
+        state: present
+        create_home: true
+      when: user_check.rc != 0
+      no_log: true
+    
+    - name: Set up .ssh directory for ansible user
+      ansible.builtin.file:
+        path: "/home/{{ check_username }}/.ssh"
+        state: directory
+        mode: "0700"
+        owner: "{{ check_username }}"
+        group: "{{ check_group }}"
+      when: user_check.rc != 0 #important
+
+    - name: Add the user's public SSH key to authorized_keys
+      ansible.posix.authorized_key:
+        user: "{{ check_username }}"
+        key: "{{ ansible_ssh_key }}"
+        state: present
+      when: user_check.rc != 0 #important      

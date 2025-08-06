@@ -1,0 +1,21 @@
+---
+- name: Deploy Azure Arc Script to targer machines
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy script to remote server
+      ansible.builtin.copy:
+        src: /Users/mihaipetrache/Documents/HomeLab/Scripts/Azure/azureOnboardingScript.sh
+        dest: /tmp/azureOnboardingScript.sh
+        mode: '0755'
+
+    - name: Run script
+      ansible.builtin.shell: /tmp/azureOnboardingScript.sh
+      args:
+        chdir: /tmp
+      register: script_output
+      
+    - name: Display script output
+      ansible.builtin.debug:
+        var: script_output.stdout_lines
