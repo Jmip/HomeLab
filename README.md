@@ -22,3 +22,11 @@ Applications:
       
     The metrics collected will be used to create graphs with overall health history.  
 # AWS infrastructure will be used as a clone for HomeLab's projects.
+# Azure infrastructure will be used for work projects including upskill in working with Microsoft suite:
+    - Arc;
+    - DevOps;
+    - Monitor;
+    - Sentinel;
+    - Workloads;
+    - Dashboards;
+    - Power BI;
