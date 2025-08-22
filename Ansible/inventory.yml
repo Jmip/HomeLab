@@ -1,16 +1,28 @@
 ---
-all:
+aws:
+  hosts:
   children:
-    MasterServer:
+    aws_linux:
       hosts:
-        13.60.239.37:
-          ansible_user: ubuntu
-          ansible_ssh_private_key_file: /Users/mihaipetrache/Documents/AWS/Tutorial.pem
-    Students:
+        aws-server-01:
+        aws-server-02:
+        aws-server-03:
+
+azure:
+  children:
+    azure_linux:
       hosts:
-        13.51.241.241:
-          ansible_user: ubuntu
-          ansible_ssh_private_key_file: /Users/mihaipetrache/Documents/AWS/Tutorial.pem
-        51.21.222.123:
-          ansible_user: ubuntu
-          ansible_ssh_private_key_file: /Users/mihaipetrache/Documents/AWS/Tutorial.pem
+        azure-linux-server:
+
+    azure_windows:
+      hosts:
+        azure-windows-server:
+
+# --- On-Premise Environment ---
+# A group for on-premise server, specifically with Docker installed.
+# We will use 'localhost' since this is a local server.
+on_premise:
+  hosts:
+    localhost:
+      # This variable tells Ansible to connect to the local machine directly.
+      ansible_connection: local

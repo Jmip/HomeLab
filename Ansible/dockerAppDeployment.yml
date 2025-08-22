@@ -1,0 +1,66 @@
+---
+- name: Deploy Docker containers for Jenkins, Prometheus, and Grafana
+  hosts: on_premise
+  become: yes
+  vars:
+    jenkins_container_name: "Jolteon"
+    prometheus_container_name: "Pikachu"
+    grafana_container_name: "Golduck"
+
+  tasks:
+    - name: Pull the required Docker images before running
+      ansible.builtin.docker_image:
+        name: "{{ item }}"
+        source: pull
+        state: present
+      loop:
+        - "jenkins/jenkins:lts"
+        - "prom/prometheus"
+        - "grafana/grafana"
+
+    - name: Run Jenkins container
+      ansible.builtin.docker_container:
+        name: "{{ jenkins_container_name }}"
+        image: "jenkins/jenkins:lts"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "8080:8080"
+          - "50000:50000"
+        volumes:
+          # This volume is recommended for data persistence.
+          # Change '/path/on/host' to a directory on your target machine.
+          - "/opt/app/Jenkins/jenkins_home"
+      register: jenkins_container
+
+    - name: Run Prometheus container
+      ansible.builtin.docker_container:
+        name: "{{ prometheus_container_name }}"
+        image: "prom/prometheus"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "9090:9090"
+        volumes:
+          # In a real-world scenario, you would mount a Prometheus configuration file here.
+          # Example: - /path/to/prometheus.yml:/etc/prometheus/prometheus.yml
+          - "/opt/app/Prometheus/prometheus_data"
+      register: prometheus_container
+
+    - name: Run Grafana container
+      ansible.builtin.docker_container:
+        name: "{{ grafana_container_name }}"
+        image: "grafana/grafana"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "3000:3000"
+      register: grafana_container
+
+    - name: Display container status
+      ansible.builtin.debug:
+        msg: |
+          Jenkins container ({{ jenkins_container_name }}) status: {{ jenkins_container.state }}
+          Prometheus container ({{ prometheus_container_name }}) status: {{ prometheus_container.state }}
+          Grafana container ({{ grafana_container_name }}) status: {{ grafana_container.state }}
+
