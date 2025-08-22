@@ -55,6 +55,8 @@
         restart_policy: always
         published_ports:
           - "3000:3000"
+        volumes:
+         - "/opt/app/Grafana/grafana"
       register: grafana_container
 
     - name: Display container status
