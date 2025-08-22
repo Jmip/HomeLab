@@ -1,5 +1,5 @@
 # Import the MongoClient from the pymongo library.
-from pymongo import MongoClient
+from pymongo import MongoClient # type: ignore
 
 # Define the connection URI and the database name.
 # NOTE: Make sure to update the connection string if your MongoDB is not on localhost or requires authentication.
