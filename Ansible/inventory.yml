@@ -1,22 +1,17 @@
 ---
-aws:
-  hosts:
+all:
   children:
-    aws_linux:
+  # --- AWS environment ---
+    aws:
       hosts:
-        aws-server-01:
-        aws-server-02:
-        aws-server-03:
+        aws_linux:
+          aws-server-01: 13.61.1.20
+          aws-server-02: 16.16.58.178
+          aws-server-03: 51.20.52.147
+        vars:
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: ~/.ssh/Totorial.pem
 
-azure:
-  children:
-    azure_linux:
-      hosts:
-        azure-linux-server:
-
-    azure_windows:
-      hosts:
-        azure-windows-server:
 
 # --- On-Premise Environment ---
 # A group for on-premise server, specifically with Docker installed.
