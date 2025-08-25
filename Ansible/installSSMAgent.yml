@@ -1,0 +1,9 @@
+---
+- name: Install SSM Agent on instances
+  hosts: aws
+  become: yes
+  tasks:
+    - name: Ensure SSM Agent is present
+      ansible.builtin.apt:
+        name: ssm-agent
+        state: present
