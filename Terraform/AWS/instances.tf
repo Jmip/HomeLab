@@ -1,7 +1,7 @@
 resource "aws_instance" "Master" {
-  ami           = "ami-04542995864e26699" # Ubuntu 22.04 LTS (x86_64) - Find the latest for eu-north-1
+  ami           = "ami-04542995864e26699" 
   instance_type  = "t3.micro"
-  subnet_id      = "subnet-051045c38e58868a0" # Replace with your desired subnet ID
+  subnet_id      = "subnet-051045c38e58868a0" 
   vpc_security_group_ids = ["sg-040c1e25cf3fd034b"]
   key_name      = "Tutorial"
   tags = {
@@ -10,9 +10,9 @@ resource "aws_instance" "Master" {
 }
 
 resource "aws_instance" "Bot1" {
-  ami           = "ami-04542995864e26699" # Ubuntu 22.04 LTS (x86_64) - Find the latest for eu-north-1
+  ami           = "ami-04542995864e26699" 
   instance_type  = "t3.micro"
-  subnet_id      = "subnet-051045c38e58868a0" # Replace with your desired subnet ID
+  subnet_id      = "subnet-051045c38e58868a0" 
   vpc_security_group_ids = ["sg-040c1e25cf3fd034b"]
   key_name      = "Tutorial"
   tags = {
@@ -21,9 +21,9 @@ resource "aws_instance" "Bot1" {
 }
 
 resource "aws_instance" "Bot2" {
-  ami           = "ami-04542995864e26699" # Ubuntu 22.04 LTS (x86_64) - Find the latest for eu-north-1
+  ami           = "ami-04542995864e26699" 
   instance_type  = "t3.micro"
-  subnet_id      = "subnet-051045c38e58868a0" # Replace with your desired subnet ID
+  subnet_id      = "subnet-051045c38e58868a0" 
   vpc_security_group_ids = ["sg-040c1e25cf3fd034b"]
   key_name      = "Tutorial"
   tags = {

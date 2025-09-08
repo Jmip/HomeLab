@@ -1,19 +1,19 @@
 provider "aws" {
-  region = "eu-north-1" # Make sure this matches your region
+  region = "eu-north-1"
 }
 
 resource "aws_ec2_instance_state" "master_status" {
-  instance_id = "i-06eacbe65379b8178" # REPLACE with your Master instance ID
+  instance_id = "i-06eacbe65379b8178"
   state       = "running"
 }
 
 resource "aws_ec2_instance_state" "bot1_status" {
-  instance_id = "i-04d5a7cf235e958d6" # REPLACE with your Bot1 instance ID
+  instance_id = "i-04d5a7cf235e958d6"
   state       = "running"
 }
 
 resource "aws_ec2_instance_state" "bot2_status" {
-  instance_id = "i-0ab56c41f1fc8cd59" # REPLACE with your Bot2 instance ID
+  instance_id = "i-0ab56c41f1fc8cd59"
   state       = "running"
 }
 
