@@ -1,6 +1,6 @@
 ---
 - name: Check reachability of servers
-  hosts: all
+  hosts: aws
   tasks:
     - name: Ping the servers
       ansible.builtin.ping:
