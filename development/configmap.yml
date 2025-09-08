@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
+    user  nginx;
+    worker_processes auto;
+    events { worker_connections 1024; }
+    http {
+      sendfile on;
+      tcp_nopush on;
+      tcp_nodelay on;
+      keepalive_timeout 65;
+
+      server_tokens off;
+      access_log /dev/stdout;
+      error_log /dev/stderr warn;
+
+      gzip on;
+      gzip_types text/plain text/css application/json application/javascript text/xml application/xml image/svg+xml;
+
+      server {
+        listen 80;
+        server_name _;
+        root /usr/share/nginx/html;
+
+        location / {
+          # prefer pre-compressed files
+          try_files $uri $uri/ $uri.html $uri/index.html /index.html;
+        }
+
+        # set long cache headers for immutable fingerprinted assets
+        location ~* \.(?:css|js|woff2|woff|ttf|svg|jpg|jpeg|png|gif)$ {
+          add_header Cache-Control "public, max-age=31536000, immutable";
+        }
+
+        location = /healthz {
+          add_header Content-Type text/plain;
+          return 200 'ok';
+        }
+      }
+    }
