@@ -1,0 +1,28 @@
+#gitigore file
+.gitigore
+
+# Local .terraform directories
+.terraform/
+*.terraform.lock.hcl
+
+# .tfstate files and backups
+*.tfstate
+*.tfstate.backup
+
+# Crash log files
+crash.log
+
+# Ignore override files, which are usually local and user-specific
+override.tf
+override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore Terraform plan output
+*.tfplan
+
+# Ignore sensitive variable files
+*.tfvars
+*.tfvars.json
